@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Glumgadget — Senior Backend & Automation Engineer. Custom Discord infrastructure, server logic, and rapid prototypes. Source-code delivery only. Crypto-settled escrow." />
+  <meta name="theme-color" content="#0B0B0C" />
+  <title>Glumgadget // Custom Automation &amp; Backend Engineer</title>
+
+  <!-- ===========================================================
+       TAILWIND CSS (CDN)
+       For production, swap this for a compiled Tailwind build.
+       =========================================================== -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind theme extension — wired to the cyberpunk/minimalist palette
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:    '#0B0B0C',   // deep matte black — page background
+            ink2:   '#101013',   // slightly raised surface
+            ink3:   '#16161A',   // card surface
+            line:   '#1F1F25',   // crisp border lines
+            line2:  '#2A2A33',   // brighter border on hover
+            slate1: '#9CA3AF',   // muted body text
+            slate2: '#6B7280',   // dim labels
+            neon:   '#00FF66',   // primary accent (crypto green)
+            volt:   '#00E5FF',   // secondary accent (electric blue)
+          },
+          fontFamily: {
+            sans:  ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            mono:  ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- ===========================================================
+       GSAP + ScrollTrigger (CDN)
+       =========================================================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Inter + JetBrains Mono via Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="bg-ink text-slate-100 font-sans antialiased selection:bg-neon selection:text-ink">
+
+  <!-- ===========================================================
+       AMBIENT BACKGROUND GRID (decorative, non-interactive)
+       =========================================================== -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <!-- ===========================================================
+       NAVIGATION
+       =========================================================== -->
+  <header id="nav" class="fixed top-0 inset-x-0 z-50 border-b border-line bg-ink/70 backdrop-blur-md">
+    <nav class="mx-auto max-w-6xl px-6 lg:px-10 h-16 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-2.5 group">
+        <span class="inline-block h-2.5 w-2.5 rounded-full bg-neon shadow-[0_0_12px_#00FF66] transition-transform group-hover:scale-125"></span>
+        <span class="font-mono text-sm tracking-tight text-slate-100">glumgadget<span class="text-neon">.dev</span></span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 text-sm text-slate1">
+        <a href="#terms"    class="nav-link">Terms</a>
+        <a href="#projects" class="nav-link">Architecture</a>
+        <a href="#contact"  class="nav-link">Contact</a>
+      </div>
+
+      <a href="https://discord.com/users/1015860237401591849"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="hidden sm:inline-flex items-center gap-2 border border-line2 px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider text-slate-100 hover:border-neon hover:text-neon transition-colors">
+        <span class="h-1.5 w-1.5 rounded-full bg-neon"></span>
+        Open Ticket
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- =========================================================
+         SECTION 1 — HERO (GSAP staggered entrance)
+         ========================================================= -->
+    <section id="hero" class="relative min-h-screen flex items-center px-6 lg:px-10 pt-24 pb-20">
+      <div class="mx-auto max-w-6xl w-full">
+
+        <!-- status pill -->
+        <div class="hero-stagger inline-flex items-center gap-2.5 border border-line2 bg-ink2/60 px-3 py-1.5 mb-8">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-neon opacity-60"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-neon"></span>
+          </span>
+          <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-slate1">Available for Q4 contracts</span>
+        </div>
+
+        <!-- headline -->
+        <h1 class="hero-stagger font-extrabold tracking-tight text-5xl sm:text-6xl lg:text-7xl leading-[0.95] max-w-4xl">
+          Custom Automation
+          <span class="block text-slate2">&amp; Backend</span>
+          <span class="block">Engineer<span class="text-neon">.</span></span>
+        </h1>
+
+        <!-- subheadline -->
+        <p class="hero-stagger mt-8 max-w-2xl text-lg sm:text-xl text-slate1 leading-relaxed">
+          I architect complex server logic, high-performance Discord infrastructure, and rapid prototypes.
+          <span class="text-slate-100">You own the code. I build the engine.</span>
+        </p>
+
+        <!-- CTA buttons -->
+        <div class="hero-stagger mt-10 flex flex-wrap items-center gap-4">
+          <a href="https://discord.com/users/1015860237401591849"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="group inline-flex items-center gap-3 bg-neon text-ink px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider hover:bg-volt transition-colors">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.21.38-.46.89-.63 1.3a18.27 18.27 0 0 0-5.86 0A12.5 12.5 0 0 0 9.43 3 19.74 19.74 0 0 0 5.67 4.37C2.78 8.51 2.02 12.56 2.4 16.56a19.93 19.93 0 0 0 5.99 3.04c.49-.67.92-1.39 1.29-2.14-.71-.27-1.39-.6-2.03-.99.17-.13.34-.26.5-.4 3.93 1.84 8.18 1.84 12.06 0 .17.14.33.27.5.4-.65.39-1.33.72-2.04.99.37.75.8 1.47 1.29 2.14a19.9 19.9 0 0 0 6-3.04c.46-4.66-.78-8.68-3.65-12.19ZM9.55 14.19c-1.18 0-2.15-1.09-2.15-2.43 0-1.34.95-2.43 2.15-2.43 1.2 0 2.17 1.1 2.15 2.43 0 1.34-.95 2.43-2.15 2.43Zm4.9 0c-1.18 0-2.15-1.09-2.15-2.43 0-1.34.95-2.43 2.15-2.43 1.2 0 2.17 1.1 2.15 2.43 0 1.34-.94 2.43-2.15 2.43Z"/>
+            </svg>
+            Hire Me via Discord
+          </a>
+
+          <a href="#projects"
+             class="group inline-flex items-center gap-3 border border-line2 px-6 py-3.5 font-mono text-sm font-semibold uppercase tracking-wider text-slate-100 hover:border-volt hover:text-volt transition-colors">
+            View Architecture
+            <svg class="h-4 w-4 transition-transform group-hover:translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- meta strip -->
+        <div class="hero-stagger mt-16 grid grid-cols-2 sm:grid-cols-4 gap-px bg-line border border-line max-w-2xl">
+          <div class="bg-ink px-4 py-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Stack</div>
+            <div class="mt-1 text-sm text-slate-100">Node / Python / Go</div>
+          </div>
+          <div class="bg-ink px-4 py-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Delivery</div>
+            <div class="mt-1 text-sm text-slate-100">Source Code Only</div>
+          </div>
+          <div class="bg-ink px-4 py-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Escrow</div>
+            <div class="mt-1 text-sm text-slate-100">50 / 50 Split</div>
+          </div>
+          <div class="bg-ink px-4 py-4">
+            <div class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Settlement</div>
+            <div class="mt-1 text-sm text-neon">LTC</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- scroll cue -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.3em] text-slate2">
+        <span class="block animate-pulse">scroll</span>
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 2 — TERMS OF ENGAGEMENT (Filter Box)
+         ========================================================= -->
+    <section id="terms" class="relative px-6 lg:px-10 py-24 lg:py-32">
+      <div class="mx-auto max-w-6xl">
+
+        <!-- section header -->
+        <div class="reveal-section max-w-3xl">
+          <div class="font-mono text-[11px] uppercase tracking-[0.3em] text-neon mb-4">// 02 — How We Work Together</div>
+          <h2 class="text-4xl sm:text-5xl font-bold tracking-tight">How I Work</h2>
+          <p class="mt-5 text-slate1 text-lg leading-relaxed">
+            A simple, opinionated operating model so both sides know what to expect before we start.
+            Please give it a quick read before opening a ticket.
+          </p>
+        </div>
+
+        <!-- the filter box -->
+        <div class="reveal-section mt-12 grid grid-cols-1 lg:grid-cols-3 gap-px bg-line border border-line">
+
+          <!-- Point 01 — Source Code Hand-Off -->
+          <article class="terms-card group bg-ink3 p-8 lg:p-10 relative overflow-hidden">
+            <div class="flex items-start justify-between mb-6">
+              <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-slate2">01 / Deliverable</span>
+              <svg class="h-5 w-5 text-slate2 group-hover:text-neon transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M8 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1M9 3v2h6V3M9 13h6M9 17h4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-100 mb-3">Source Code Hand-Off</h3>
+            <p class="text-slate1 text-sm leading-relaxed">
+              Deliverables consist entirely of cleanly written, fully documented raw source repositories.
+              Provided as a <span class="font-mono text-volt">.zip</span> archive or private GitHub repository access —
+              no lock-in, no hidden binaries, just code you fully own.
+            </p>
+            <div class="terms-glow"></div>
+          </article>
+
+          <!-- Point 02 — Zero Hosting Liability -->
+          <article class="terms-card group bg-ink3 p-8 lg:p-10 relative overflow-hidden">
+            <div class="flex items-start justify-between mb-6">
+              <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-slate2">02 / Liability</span>
+              <svg class="h-5 w-5 text-slate2 group-hover:text-neon transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <path d="M12 3l8 4v5c0 4.97-3.58 8.74-8 10-4.42-1.26-8-5.03-8-10V7l8-4Z" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="m9 12 2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-100 mb-3">Zero Hosting Liability</h3>
+            <p class="text-slate1 text-sm leading-relaxed">
+              Long-term infrastructure deployment and ongoing hosting costs stay on your side.
+              I build it efficient so you can host it cheaply — after hand-off, you run it
+              however works best for you.
+            </p>
+            <div class="terms-glow"></div>
+          </article>
+
+          <!-- Point 03 — Decentralized Escrow -->
+          <article class="terms-card group bg-ink3 p-8 lg:p-10 relative overflow-hidden">
+            <div class="flex items-start justify-between mb-6">
+              <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-slate2">03 / Settlement</span>
+              <svg class="h-5 w-5 text-slate2 group-hover:text-neon transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-100 mb-3">Decentralized Escrow</h3>
+            <p class="text-slate1 text-sm leading-relaxed">
+              Terms are worked out directly in private tickets. <span class="text-slate-100">50% upfront deposit / 50% post-demo.</span>
+              The second half is released once you approve a recorded milestone or live video demo.
+              Settled exclusively via <span class="font-mono text-neon">LTC</span>.
+            </p>
+            <div class="terms-glow"></div>
+          </article>
+        </div>
+
+        <!-- micro-note -->
+        <div class="reveal-section mt-6 flex items-start gap-3 text-xs text-slate2 font-mono">
+          <span class="text-neon">//</span>
+          <span>If any of the above don't fit how you usually work, that's totally fine — just worth flagging before we both spend time on a ticket.</span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 3 — CORE FEATS & PRODUCTION LIFECYCLE
+         ========================================================= -->
+    <section id="projects" class="relative px-6 lg:px-10 py-24 lg:py-32 border-t border-line">
+      <div class="mx-auto max-w-6xl">
+
+        <!-- section header -->
+        <div class="reveal-section max-w-3xl">
+          <div class="font-mono text-[11px] uppercase tracking-[0.3em] text-volt mb-4">// 03 — Work So Far</div>
+          <h2 class="text-4xl sm:text-5xl font-bold tracking-tight">Core Feats &amp; Architecture</h2>
+          <p class="mt-5 text-slate1 text-lg leading-relaxed">
+            Live infrastructure, engineered integrations, and archived client repositories.
+            Each entry is a shipped system — not a portfolio mockup.
+          </p>
+        </div>
+
+        <!-- ============== CATEGORY A — Active Production Infrastructure ============== -->
+        <div class="reveal-section mt-16">
+          <div class="flex items-center gap-4 mb-8">
+            <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-neon">Category A</span>
+            <span class="h-px flex-1 bg-line"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-slate2">Active Production Infrastructure</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
+
+            <!-- A1 -->
+            <article class="project-card group bg-ink3 p-7 lg:p-8 hover:bg-ink2 transition-colors">
+              <div class="flex items-center justify-between mb-5">
+                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">A.01 // Moderation Mesh</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-neon">
+                  <span class="h-1.5 w-1.5 rounded-full bg-neon animate-pulse"></span>Live
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-slate-100 mb-2 group-hover:text-neon transition-colors">
+                Multi-Guild Global Ban Sync Gateway
+              </h3>
+              <p class="text-slate1 text-sm leading-relaxed">
+                A complex cross-server moderation network using automated database replication and webhooks
+                to mirror administrative actions instantly across federated servers.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="tag">DB Replication</span>
+                <span class="tag">Webhooks</span>
+                <span class="tag">Federated State</span>
+              </div>
+            </article>
+
+            <!-- A2 -->
+            <article class="project-card group bg-ink3 p-7 lg:p-8 hover:bg-ink2 transition-colors">
+              <div class="flex items-center justify-between mb-5">
+                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">A.02 // HR Automation</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-neon">
+                  <span class="h-1.5 w-1.5 rounded-full bg-neon animate-pulse"></span>Live
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-slate-100 mb-2 group-hover:text-neon transition-colors">
+                Internal Team Performance Tracker
+              </h3>
+              <p class="text-slate1 text-sm leading-relaxed">
+                An enterprise-grade HR automation suite tracking staff shifting, administrative activity metrics,
+                and computing automated server health KPIs.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="tag">KPI Engine</span>
+                <span class="tag">Shift Tracking</span>
+                <span class="tag">Analytics</span>
+              </div>
+            </article>
+
+            <!-- A3 -->
+            <article class="project-card group bg-ink3 p-7 lg:p-8 hover:bg-ink2 transition-colors">
+              <div class="flex items-center justify-between mb-5">
+                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">A.03 // Growth Loop</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-neon">
+                  <span class="h-1.5 w-1.5 rounded-full bg-neon animate-pulse"></span>Live
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-slate-100 mb-2 group-hover:text-neon transition-colors">
+                Automated Community Growth Engine
+              </h3>
+              <p class="text-slate1 text-sm leading-relaxed">
+                A custom advertising and ad-scheduling bot featuring automated broadcast loops
+                and built-in anti-spam optimization filters.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="tag">Scheduling</span>
+                <span class="tag">Anti-Spam</span>
+                <span class="tag">Broadcast</span>
+              </div>
+            </article>
+
+            <!-- A4 -->
+            <article class="project-card group bg-ink3 p-7 lg:p-8 hover:bg-ink2 transition-colors">
+              <div class="flex items-center justify-between mb-5">
+                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">A.04 // Secure Mail</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-neon">
+                  <span class="h-1.5 w-1.5 rounded-full bg-neon animate-pulse"></span>Live
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-slate-100 mb-2 group-hover:text-neon transition-colors">
+                Isolated Client-to-Staff Secure Mail Gateway
+              </h3>
+              <p class="text-slate1 text-sm leading-relaxed">
+                A secure modmail ticketing architecture maintaining robust privacy logic
+                for high-traffic servers.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="tag">Modmail</span>
+                <span class="tag">Privacy Logic</span>
+                <span class="tag">Ticketing</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ============== CATEGORY B — Systems Integration & Optimization ============== -->
+        <div class="reveal-section mt-20">
+          <div class="flex items-center gap-4 mb-8">
+            <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-volt">Category B</span>
+            <span class="h-px flex-1 bg-line"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-slate2">Systems Integration &amp; Optimization</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line border border-line">
+
+            <!-- B1 -->
+            <article class="project-card group bg-ink3 p-7 lg:p-8 hover:bg-ink2 transition-colors">
+              <div class="flex items-center justify-between mb-5">
+                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">B.01 // Container Porting</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-volt">
+                  <span class="h-1.5 w-1.5 rounded-full bg-volt"></span>Shipped
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-slate-100 mb-2 group-hover:text-volt transition-colors">
+                Enterprise Infrastructure Porting (Zeppelin Bot on Render)
+              </h3>
+              <p class="text-slate1 text-sm leading-relaxed">
+                Successfully engineered a specialized containerization deployment pipeline to force a notoriously
+                restrictive, enterprise-grade moderation framework to execute flawlessly on restricted cloud infrastructure.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="tag">Docker</span>
+                <span class="tag">Render Cloud</span>
+                <span class="tag">Pipeline</span>
+              </div>
+            </article>
+
+            <!-- B2 -->
+            <article class="project-card group bg-ink3 p-7 lg:p-8 hover:bg-ink2 transition-colors">
+              <div class="flex items-center justify-between mb-5">
+                <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">B.02 // Resource Tuning</span>
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-volt">
+                  <span class="h-1.5 w-1.5 rounded-full bg-volt"></span>Shipped
+                </span>
+              </div>
+              <h3 class="text-lg font-semibold text-slate-100 mb-2 group-hover:text-volt transition-colors">
+                Resource-Constrained Optimization (Red Discord Bot Custom Tailoring)
+              </h3>
+              <p class="text-slate1 text-sm leading-relaxed">
+                Modified and scaled a heavily modular Python framework to run continuously within ultra-tight,
+                low-tier resource hosting ceilings without causing memory leaks or latency spikes.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="tag">Python</span>
+                <span class="tag">Memory Profiling</span>
+                <span class="tag">Low-Tier Hosting</span>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- ============== CATEGORY C — Archived Client Deliverables ============== -->
+        <div class="reveal-section mt-20">
+          <div class="flex items-center gap-4 mb-8">
+            <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-slate1">Category C</span>
+            <span class="h-px flex-1 bg-line"></span>
+            <span class="font-mono text-[11px] uppercase tracking-[0.3em] text-slate2">Archived Client Deliverables</span>
+          </div>
+
+          <article class="project-card bg-ink3 border border-line p-8 lg:p-12 relative overflow-hidden">
+            <!-- corner marker -->
+            <div class="absolute top-0 right-0 font-mono text-[10px] uppercase tracking-[0.2em] text-slate2 px-4 py-2 border-l border-b border-line">
+              archive // 2024 – 2026
+            </div>
+
+            <div class="font-mono text-[11px] uppercase tracking-[0.3em] text-slate2 mb-5">Completed Repository Lifecycles</div>
+
+            <p class="text-slate-100 text-lg lg:text-xl leading-relaxed max-w-4xl">
+              Successfully architected, coded, and delivered
+              <span class="text-neon font-semibold">3 additional custom-scoped automation applications</span>
+              for external communities. These projects achieved full contract completion, and their raw file
+              repositories were successfully handed off to their respective ownership teams for independent hosting.
+            </p>
+
+            <!-- archive stat row -->
+            <div class="mt-10 grid grid-cols-3 gap-px bg-line border border-line max-w-xl">
+              <div class="bg-ink3 px-4 py-4">
+                <div class="text-2xl font-bold text-slate-100">03</div>
+                <div class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Repos Delivered</div>
+              </div>
+              <div class="bg-ink3 px-4 py-4">
+                <div class="text-2xl font-bold text-slate-100">100<span class="text-neon">%</span></div>
+                <div class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Contract Close</div>
+              </div>
+              <div class="bg-ink3 px-4 py-4">
+                <div class="text-2xl font-bold text-slate-100">0</div>
+                <div class="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-slate2">Hosting Retainers</div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- =========================================================
+         SECTION 4 — CALL TO ACTION / FOOTER
+         ========================================================= -->
+    <section id="contact" class="relative px-6 lg:px-10 py-24 lg:py-32 border-t border-line">
+      <div class="mx-auto max-w-4xl text-center">
+
+        <div class="reveal-section">
+          <div class="font-mono text-[11px] uppercase tracking-[0.3em] text-neon mb-6">// 04 — Let's Talk</div>
+
+          <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight">
+            Ready to drop a project blueprint?
+            <span class="block text-neon mt-2">Let's lock a price.</span>
+          </h2>
+
+          <a href="https://discord.com/users/1015860237401591849"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="group inline-flex items-center gap-3 mt-10 bg-neon text-ink px-8 py-4 font-mono text-sm font-semibold uppercase tracking-wider hover:bg-volt transition-colors">
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.21.38-.46.89-.63 1.3a18.27 18.27 0 0 0-5.86 0A12.5 12.5 0 0 0 9.43 3 19.74 19.74 0 0 0 5.67 4.37C2.78 8.51 2.02 12.56 2.4 16.56a19.93 19.93 0 0 0 5.99 3.04c.49-.67.92-1.39 1.29-2.14-.71-.27-1.39-.6-2.03-.99.17-.13.34-.26.5-.4 3.93 1.84 8.18 1.84 12.06 0 .17.14.33.27.5.4-.65.39-1.33.72-2.04.99.37.75.8 1.47 1.29 2.14a19.9 19.9 0 0 0 6-3.04c.46-4.66-.78-8.68-3.65-12.19ZM9.55 14.19c-1.18 0-2.15-1.09-2.15-2.43 0-1.34.95-2.43 2.15-2.43 1.2 0 2.17 1.1 2.15 2.43 0 1.34-.95 2.43-2.15 2.43Zm4.9 0c-1.18 0-2.15-1.09-2.15-2.43 0-1.34.95-2.43 2.15-2.43 1.2 0 2.17 1.1 2.15 2.43 0 1.34-.94 2.43-2.15 2.43Z"/>
+            </svg>
+            Open a Ticket / DM on Discord
+          </a>
+
+          <!-- settlement line -->
+          <p class="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-slate2">
+            Usually replies within 24 – 48h &nbsp;·&nbsp; Payment via LTC
+          </p>
+        </div>
+
+        <!-- crypto badges -->
+        <div class="reveal-section mt-16 flex flex-wrap items-center justify-center gap-4">
+          <!-- USDC -->
+          <div class="crypto-badge" title="USD Coin">
+            <svg class="h-7 w-7" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="15" fill="#2775CA"/>
+              <path d="M20.5 18.3c0-2.4-1.4-3.2-4.2-3.6-2-.3-2.4-.8-2.4-1.7s.7-1.5 2-1.5c1.2 0 1.9.4 2.2 1.4.06.2.25.34.46.34h1.06c.27 0 .5-.22.5-.5v-.05c-.27-1.5-1.5-2.6-3.2-2.7V7.5c0-.27-.22-.5-.55-.5h-.98c-.27 0-.5.23-.5.5v1.45c-2 .27-3.27 1.6-3.27 3.27 0 2.27 1.4 3.13 4.18 3.5 1.86.3 2.4.7 2.4 1.7s-.86 1.7-2.06 1.7c-1.6 0-2.13-.67-2.33-1.6-.06-.25-.27-.42-.5-.42h-1.13c-.27 0-.5.22-.5.5v.05c.27 1.66 1.33 2.86 3.53 3.2v1.55c0 .27.22.5.5.5h1c.27 0 .5-.23.5-.5v-1.55c2-.33 3.34-1.74 3.34-3.55z" fill="#fff"/>
+              <path d="M12.27 22.5c-3.93-1.4-5.93-5.8-4.46-9.67.74-2.07 2.4-3.6 4.46-4.33.2-.07.3-.2.3-.4V7.2c0-.27-.2-.4-.4-.34C7.4 8 4.6 12.2 5.6 16.6c.6 2.6 2.4 4.8 4.93 5.93.27.13.54 0 .54-.34v-.93c0-.2-.13-.4-.33-.46zM19.13 6.87c-.27-.13-.54 0-.54.33v.93c0 .2.13.4.33.47 3.93 1.4 5.93 5.8 4.46 9.67-.74 2.07-2.4 3.6-4.46 4.33-.2.07-.3.2-.3.4v.93c0 .27.2.4.4.34 4.13-1.27 6.93-5.47 5.93-9.87-.6-2.67-2.4-4.8-4.93-5.93z" fill="#fff"/>
+            </svg>
+            <span class="crypto-label">USDC</span>
+          </div>
+
+          <!-- USDT -->
+          <div class="crypto-badge" title="Tether">
+            <svg class="h-7 w-7" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="15" fill="#26A17B"/>
+              <path d="M17.92 14.92v-2.2h5.01V9.4H9.08v3.32h5.01v2.2c-4.08.19-7.15 1-7.15 1.97 0 .97 3.07 1.78 7.15 1.97v7.04h3.83v-7.04c4.07-.19 7.14-1 7.14-1.97 0-.97-3.07-1.78-7.14-1.97zm0 3.34v-.01c-.1.01-.65.04-1.86.04-.97 0-1.65-.03-1.89-.04v.01c-3.71-.16-6.48-.81-6.48-1.59 0-.78 2.77-1.43 6.48-1.6v2.54c.25.02.94.06 1.91.06 1.28 0 1.74-.04 1.86-.06v-2.54c3.7.17 6.47.82 6.47 1.6 0 .78-2.77 1.43-6.47 1.59z" fill="#fff"/>
+            </svg>
+            <span class="crypto-label">USDT</span>
+          </div>
+
+          <!-- ETH -->
+          <div class="crypto-badge" title="Ethereum">
+            <svg class="h-7 w-7" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="15" fill="#627EEA"/>
+              <g fill="#fff" fill-rule="nonzero">
+                <path d="M16.498 4v8.87l7.497 3.35z" fill-opacity=".602"/>
+                <path d="M16.498 4L9 16.22l7.498-3.35z"/>
+                <path d="M16.498 21.968v6.027L24 17.616z" fill-opacity=".602"/>
+                <path d="M16.498 27.995v-6.028L9 17.616z"/>
+                <path d="M16.498 20.573l7.497-4.353-7.497-3.348z" fill-opacity=".2"/>
+                <path d="M9 16.22l7.498 4.353v-7.701z" fill-opacity=".602"/>
+              </g>
+            </svg>
+            <span class="crypto-label">ETH</span>
+          </div>
+
+          <!-- SOL -->
+          <div class="crypto-badge" title="Solana">
+            <svg class="h-7 w-7" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="15" fill="#000"/>
+              <defs>
+                <linearGradient id="sol-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#9945FF"/>
+                  <stop offset="100%" stop-color="#14F195"/>
+                </linearGradient>
+              </defs>
+              <path d="M22.31 13.18c-.07-.07-.16-.11-.26-.11H10.27c-.18 0-.27.22-.14.34l2.13 2.11c.07.07.16.11.26.11h11.78c.18 0 .27-.22.14-.34l-2.13-2.11zm0-3.99c-.07-.07-.16-.11-.26-.11H10.27c-.18 0-.27.22-.14.34l2.13 2.11c.07.07.16.11.26.11h11.78c.18 0 .27-.22.14-.34l-2.13-2.11zm-12.62 7.98c.07-.07.16-.11.26-.11h11.78c.18 0 .27.22.14.34l-2.13 2.11c-.07.07-.16.11-.26.11H7.69c-.18 0-.27-.22-.14-.34l2.13-2.11zm12.62 3.99c-.07-.07-.16-.11-.26-.11H10.27c-.18 0-.27.22-.14.34l2.13 2.11c.07.07.16.11.26.11h11.78c.18 0 .27-.22.14-.34l-2.13-2.11z" fill="url(#sol-grad)"/>
+            </svg>
+            <span class="crypto-label">SOL</span>
+          </div>
+
+          <!-- LTC (highlighted — primary settlement) -->
+          <div class="crypto-badge crypto-badge-primary" title="Litecoin — Primary Settlement">
+            <svg class="h-7 w-7" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <circle cx="16" cy="16" r="15" fill="#345D9D"/>
+              <path d="M10.43 19.07l1.92-7.16 1.83-.7.5-1.86-.02-.05-1.8.62.95-3.55c.05-.18 0-.36-.13-.49a.51.51 0 0 0-.5-.13l-3.5 1.27c-.18.07-.31.22-.36.4l-2.42 9.04c-.05.18 0 .36.13.49.07.07.16.11.25.13l2.04-.74.5-1.86.06-.02-.46 1.78zm9.93-5.95l-1.06 3.97h-2.94l-.74 2.78h2.94l-1.02 3.81h2.34l1.02-3.81h2.94l.74-2.78h-2.94l1.06-3.97h-2.34z" fill="#fff"/>
+            </svg>
+            <span class="crypto-label">LTC</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="border-t border-line px-6 lg:px-10 py-8">
+    <div class="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate2">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-neon"></span>
+        <span>glumgadget.dev // backend &amp; automation</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <span>Source Code Only</span>
+        <span>Zero Hosting</span>
+        <span>LTC Settlement</span>
+      </div>
+      <div>&copy; <span id="year"></span> Glumgadget. Built by hand, hosted by you.</div>
+    </div>
+  </footer>
+
+  <!-- main script -->
+  <script src="script.js"></script>
+</body>
+</html>

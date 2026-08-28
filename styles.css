@@ -1,0 +1,191 @@
+/* =============================================================
+   GLUMGADGET PORTFOLIO — styles.css
+   Cyberpunk/minimalist hybrid. Deep matte blacks, neon accents.
+   Pairs with Tailwind utility classes loaded in index.html.
+   ============================================================= */
+
+:root {
+  --ink:    #0B0B0C;
+  --ink2:   #101013;
+  --ink3:   #16161A;
+  --line:   #1F1F25;
+  --line2:  #2A2A33;
+  --slate1: #9CA3AF;
+  --slate2: #6B7280;
+  --neon:   #00FF66;
+  --volt:   #00E5FF;
+}
+
+/* ---------- Base reset / typography ---------- */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--ink);
+  color: #E5E7EB;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ---------- Ambient background layers ---------- */
+
+/* Subtle 1px grid */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, #000 0%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 0%, transparent 85%);
+}
+
+/* Soft neon glow in upper-left, electric blue in lower-right */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(0,255,102,0.06) 0%, transparent 45%),
+    radial-gradient(circle at 85% 100%, rgba(0,229,255,0.05) 0%, transparent 45%);
+}
+
+/* ---------- Navigation links ---------- */
+.nav-link {
+  position: relative;
+  font-size: 0.875rem;
+  color: var(--slate1);
+  transition: color 200ms ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 0;
+  background: var(--neon);
+  transition: width 250ms ease;
+}
+.nav-link:hover {
+  color: #F3F4F6;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ---------- Project card tags ---------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate1);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--line);
+  padding: 4px 8px;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+.project-card:hover .tag {
+  border-color: var(--line2);
+  color: #D1D5DB;
+}
+
+/* ---------- Terms card glow (subtle hover accent) ---------- */
+.terms-card {
+  position: relative;
+  transition: background-color 250ms ease;
+}
+.terms-card:hover {
+  background-color: #18181D;
+}
+.terms-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at top left, rgba(0,255,102,0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 350ms ease;
+}
+.terms-card:hover .terms-glow {
+  opacity: 1;
+}
+
+/* ---------- Crypto badges ---------- */
+.crypto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--ink3);
+  border: 1px solid var(--line);
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+.crypto-badge:hover {
+  border-color: var(--line2);
+  transform: translateY(-2px);
+}
+.crypto-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--slate1);
+}
+.crypto-badge-primary {
+  border-color: rgba(0,255,102,0.4);
+  box-shadow: 0 0 0 1px rgba(0,255,102,0.15), 0 0 24px -8px rgba(0,255,102,0.4);
+}
+.crypto-badge-primary .crypto-label {
+  color: var(--neon);
+}
+
+/* ---------- Scrollbar (webkit) ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line2);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3A3A45;
+}
+
+/* ---------- Reduced motion: disable heavy animations ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .bg-grid, .bg-glow { display: none; }
+}
+
+/* ---------- Mobile tweaks ---------- */
+@media (max-width: 640px) {
+  .crypto-badge {
+    padding: 8px 11px;
+    gap: 8px;
+  }
+  .crypto-label {
+    font-size: 10px;
+  }
+}
